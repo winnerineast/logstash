@@ -32,8 +32,16 @@ module ServiceTester
       stdout.match(/^logstash.noarch/)
     end
 
-    def package_for(filename, base=ServiceTester::Base::LOCATION)
-      File.join(base, "#{filename}.rpm")
+    def package_extension
+      "rpm"
+    end
+
+    def architecture_extension
+      if java.lang.System.getProperty("os.arch") == "amd64"
+        "x86_64"
+      else
+        "aarch64"
+      end
     end
 
     def install(package, host=nil)
